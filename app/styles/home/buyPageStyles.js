@@ -55,6 +55,9 @@ const buyPageStyles = StyleSheet.create(Object.assign({}, baseStyles, {
         height: Util.pixel*40,
         backgroundColor: '#025fcc',
         borderRadius: Util.pixel*5,
+    },
+    disabled: {
+        backgroundColor: '#d8d8d8',
     }
 }));
 

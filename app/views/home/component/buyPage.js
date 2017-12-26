@@ -22,6 +22,10 @@ export default class BuyPage extends Component{
     modifyPurchase(v){
         this.data.modifyPurchase(v, 2)
     }
+    _submit(){
+        this.data.decreaseStore(this.data.purchase)
+        this.props.navigation.goBack()
+    }
     render(){
         return (
             <View style={[buyPageStyles.container, buyPageStyles.topSpace]}>
@@ -31,13 +35,13 @@ export default class BuyPage extends Component{
                     </View>
                     <View style={[buyPageStyles.flexRow, buyPageStyles.item, {justifyContent: 'space-between'}]}>
                         <Text allowFontScaling={false} style={buyPageStyles.itemText}>单价(元／kg)：</Text>
-                        <Text allowFontScaling={false} style={[buyPageStyles.itemText,{color: '#e94639'}]}>{this.data.price}</Text>
+                        <Text allowFontScaling={false} style={[buyPageStyles.itemText,{color: '#e94639'}]}>{Number(this.data.price).toFixed(2)}</Text>
                     </View>
                     <View style={[buyPageStyles.flexRow, buyPageStyles.item, {justifyContent: 'space-between'}]}>
                         <Text allowFontScaling={false} style={buyPageStyles.itemText}>数量(kg)：</Text>
                         <View style={[buyPageStyles.flexRow]}>
-                            <TouchableOpacity activeOpacity={0.7} onPress={this._buyAmount.bind(this, 'reduce')}>
-                                <View style={[buyPageStyles.flexRow,buyPageStyles.btn]}>
+                            <TouchableOpacity activeOpacity={0.7} disabled={this.data.purchase <= 0} onPress={this._buyAmount.bind(this, 'reduce')}>
+                                <View style={[buyPageStyles.flexRow,buyPageStyles.btn, (this.data.purchase <= 0) && buyPageStyles.disabled]}>
                                     <Text allowFontScaling={false} style={buyPageStyles.itemText}>➖</Text>
                                 </View>
                             </TouchableOpacity>
@@ -50,8 +54,8 @@ export default class BuyPage extends Component{
                                 value={this.data.purchase+''}
                                 onChangeText={this.modifyPurchase.bind(this)}
                                 />
-                            <TouchableOpacity activeOpacity={0.7} onPress={this._buyAmount.bind(this, 'plus')}>
-                                <View style={[buyPageStyles.flexRow,buyPageStyles.btn]}>
+                            <TouchableOpacity activeOpacity={0.7} disabled={this.data.purchase >= this.data.store} onPress={this._buyAmount.bind(this, 'plus')}>
+                                <View style={[buyPageStyles.flexRow,buyPageStyles.btn, (this.data.purchase >= this.data.store) && buyPageStyles.disabled ]}>
                                     <Text allowFontScaling={false} style={buyPageStyles.itemText}>➕</Text>
                                 </View>
                             </TouchableOpacity>
@@ -60,10 +64,10 @@ export default class BuyPage extends Component{
                     <View style={[buyPageStyles.flexRow, buyPageStyles.item, {justifyContent: 'flex-end'}]}>
                         <View style={buyPageStyles.flexRow}>
                             <Text allowFontScaling={false} style={buyPageStyles.itemText}>总计：</Text>
-                            <Text allowFontScaling={false} style={[buyPageStyles.itemText,{color: '#e94639'}]}>{this.data.price * this.data.purchase}</Text>
+                            <Text allowFontScaling={false} style={[buyPageStyles.itemText,{color: '#e94639'}]}>{(this.data.price * this.data.purchase).toFixed(2)}</Text>
                         </View>
                     </View>
-                    <TouchableOpacity activeOpacity={0.7} style={[buyPageStyles.flexRow, buyPageStyles.submit]}>
+                    <TouchableOpacity activeOpacity={0.7} style={[buyPageStyles.flexRow, buyPageStyles.submit]} onPress={this._submit.bind(this)}>
                         <View style={[buyPageStyles.flexRow, buyPageStyles.submitBtn]}>
                             <Text allowFontScaling={false} style={[buyPageStyles.title,{color: '#ffffff'}]}>确认购买</Text>
                         </View>

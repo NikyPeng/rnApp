@@ -20,7 +20,7 @@ export default class ListPageData{
     }
     @action
     increaseStore(num){
-        this.store += num
+        this.store += Number(num)
     }
     @action
     isEnough(num){
@@ -40,7 +40,12 @@ export default class ListPageData{
     }
     @action
     modifyPurchase(n, flag){
-        flag === 0 ? this.purchase -= n : flag === 1 ? this.purchase = (this.purchase - 0) + n : this.purchase = n
-}
-
+        if(flag === 0 && this.purchase <= 0){
+            return;
+        }
+        if(flag === 1 && this.purchase >= this.store){
+            return;
+        }
+        flag === 0 ? this.purchase -= n : flag === 1 ? this.purchase = (this.purchase - 0) + n : (this.purchase = n < 0 ? 0 : n > this.store ? this.store : n)
+    }
 }

@@ -43,6 +43,19 @@ const listPageStyles = StyleSheet.create(Object.assign({},baseStyles,{
         backgroundColor: '#f00',
         borderRadius: Util.pixel*5,
     },
+    item: {
+        borderLeftWidth: Util.pixel*3,
+        borderLeftColor: '#025fcc',
+        paddingLeft: Util.pixel*10,
+        marginBottom: Util.pixel*15,
+    },
+    itemTitle: {
+        fontSize: Util.commonFontSize(18),
+        color: '#025fcc',
+    },
+    footer: {
+        paddingTop: Util.pixel*20,
+    }
 }))
 
 export default listPageStyles
