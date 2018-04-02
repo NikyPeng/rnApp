@@ -8,6 +8,7 @@ import {
     Text,
     TouchableOpacity
 } from 'react-native';
+import PullRefreshScrollView from './../../components/pullRefreshScrollView/pullRefreshScrollView';
 import {observer} from 'mobx-react/native'
 import Util from './../../utils/utils'
 import HomeData from './../../datas/home/index'
@@ -40,39 +41,46 @@ export default class Home extends Component{
     toPage(){
         this.props.navigation.navigate('homePageList', {data: this.homeData.listDatas})
     }
+    _onRefresh(pullRefresh){
+        setTimeout(() => {
+            pullRefresh.onRefreshEnd()
+        }, 2000)
+    }
     render(){
         return (
-            <View style={homeStyle.container}>
-                <View style={[homeStyle.flexRow,homeStyle.btnBox]}>
-                    <Text>Welcome to home{this.homeData.count}</Text>
-                </View>
-                <View style={[homeStyle.flexRow,homeStyle.btnBox,{justifyContent: 'space-around'}]}>
-                    <View>
-                        <TouchableOpacity activeOpacity={1} onPress={this._add.bind(this)}>
-                            <View style={[homeStyle.flexRow,homeStyle.btn]}>
-                                <Text style={homeStyle.text}>加一</Text>
-                            </View>
-                        </TouchableOpacity>
+            <PullRefreshScrollView onRefresh={this._onRefresh.bind(this)} >
+                <View style={[homeStyle.container,]}>
+                    <View style={[homeStyle.flexRow,homeStyle.btnBox]}>
+                        <Text>Welcome to home{this.homeData.count}</Text>
                     </View>
-                    <View>
-                        <TouchableOpacity activeOpacity={1} onPress={this._reduce.bind(this)}>
-                            <View style={[homeStyle.flexRow,homeStyle.btn]}>
-                                <Text style={homeStyle.text}>减一</Text>
-                            </View>
-                        </TouchableOpacity>
+                    <View style={[homeStyle.flexRow,homeStyle.btnBox,{justifyContent: 'space-around'}]}>
+                        <View>
+                            <TouchableOpacity activeOpacity={1} onPress={this._add.bind(this)}>
+                                <View style={[homeStyle.flexRow,homeStyle.btn]}>
+                                    <Text style={homeStyle.text}>加一</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                        <View>
+                            <TouchableOpacity activeOpacity={1} onPress={this._reduce.bind(this)}>
+                                <View style={[homeStyle.flexRow,homeStyle.btn]}>
+                                    <Text style={homeStyle.text}>减一</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                </View>
-                <View style={[homeStyle.flexRow,homeStyle.btnBox,{justifyContent: 'space-around'}]}>
-                    <View>
-                        <TouchableOpacity activeOpacity={1} onPress={this.toPage.bind(this)}>
-                            <View style={[homeStyle.flexRow,homeStyle.btn]}>
-                                <Text style={homeStyle.text}>前往水果列表页</Text>
-                            </View>
-                        </TouchableOpacity>
+                    <View style={[homeStyle.flexRow,homeStyle.btnBox,{justifyContent: 'space-around'}]}>
+                        <View>
+                            <TouchableOpacity activeOpacity={1} onPress={this.toPage.bind(this)}>
+                                <View style={[homeStyle.flexRow,homeStyle.btn]}>
+                                    <Text style={homeStyle.text}>前往水果列表页</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                </View>
 
-            </View>
+                </View>
+            </PullRefreshScrollView>
         )
     }
 }
@@ -81,6 +89,8 @@ const homeStyle = StyleSheet.create({
         flex: 1,
         paddingLeft: Util.pixel*15,
         paddingRight: Util.pixel*15,
+        height: Util.pixel*2000,
+        backgroundColor: '#f00'
     },
     btnBox: {
         height: Util.pixel*50

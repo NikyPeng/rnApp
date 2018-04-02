@@ -17,6 +17,7 @@ import More from './more'
 
 //首页tab配置
 const homePage = {
+    header: null,
     title: 'home',
     tabBarIcon: (e) => {
         return <Image source={e.focused ? require('./../imgs/common/active_home_icon.png') : require('./../imgs/common/home_icon.png')} />

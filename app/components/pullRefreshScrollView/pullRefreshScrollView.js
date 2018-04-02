@@ -52,7 +52,7 @@ export default class PullRefreshScrollView extends Component {
         let y = target.contentOffset.y;
 
         if (this.dragFlag) {
-            if (y <= -70) {
+            if (y <= -50) {
                 this.upState();
 
             } else {
